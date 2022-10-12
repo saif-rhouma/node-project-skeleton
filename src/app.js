@@ -4,30 +4,33 @@ import environment from './config/environment';
 import helmet from 'helmet';
 import cors from 'cors';
 import logger from 'morgan';
+import Router from './router';
 
 class App {
   constructor() {
     this.app = express();
-    this.app.use(logger('dev', { skip: (req, res) => environment.nodeEnv === test }));
+    // eslint-disable-next-line no-unused-vars
+    this.app.use(logger('dev', { skip: (req, res) => environment.nodeEnv === 'test' }));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(helmet());
     this.app.use(
       cors({
-        origin: ['http://localhost:3000'],
-        // credentials: true,
-        methods: ['POST', 'DELETE', 'PUT', 'PATCH'],
+        credentials: true,
+        origin: ['http://DOMAIN'],
+        methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH', 'OPTIONS'],
       })
     );
-    this.app.use(helmet());
-    this._setupRoutes();
   }
 
   start() {
+    this._setupRoutes();
     this._listen();
   }
 
   _setupRoutes() {
     // TODO : Setup routes
+    Router.create(this.app);
   }
 
   _listen() {

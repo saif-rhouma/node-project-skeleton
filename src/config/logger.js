@@ -3,32 +3,25 @@ import environment from './environment';
 const { combine, printf, timestamp, colorize, json } = format;
 
 const getTransports = (() => {
-  if (environment.isDev) {
-    return [
-      new transports.Console({
-        format: combine(
-          timestamp(),
-          colorize(),
-          printf(({ level, message, timestamp }) => `${timestamp} [${level}] : ${message}`)
-        ),
-      }),
-    ];
-  } else {
-    return [
+  const transportConfig = [
+    new transports.Console({
+      format: combine(
+        timestamp(),
+        colorize(),
+        printf(({ level, message, timestamp }) => `${timestamp} [${level}] : ${message}`)
+      ),
+    }),
+  ];
+  if (!environment.isDev) {
+    transports.push(
       new transports.File({
         filename: './logs/info.log',
         level: 'warn',
         format: combine(timestamp(), json()),
-      }),
-      new transports.Console({
-        format: combine(
-          timestamp(),
-          colorize(),
-          printf(({ level, message, timestamp }) => `${timestamp} [${level}] : ${message}`)
-        ),
-      }),
-    ];
+      })
+    );
   }
+  return transportConfig;
 })();
 
 const logger = createLogger({

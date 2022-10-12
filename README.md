@@ -12,7 +12,7 @@ The project is a bare minimum MVC Skeleton on top of Express.
 
 ## Scripts :
 
-- ["build"]: Build ES5 version of the project with babelJs.
+- `"build"`: Build ES5 version of the project with babelJs.
 - `"start"`: Run ES5 version of the project in production environment.
 - `"dev"`: Run ES6 version of the project in development environment.
 - `"debug"`: Run ES6 version with debug mode into Chrome debug tools.
