@@ -2,9 +2,13 @@
   "name": "node-project-skeleton",
   "version": "0.0.1",
   "description": "Node Express MVC Project Skeleton By Saifeddine RHOUMA",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel ./src --out-dir ./dist",
+    "start": "node dist/server.js",
+    "dev": "cross-env NODE_ENV=development nodemon --config ./nodemon.json --exec babel-node src/server.js",
+    "debug": "npm run dev -- --inspect",
+    "test": "jest --runInBand",
+    "test:watch": "npm test -- --watch"
   },
   "repository": {
     "type": "git",
@@ -23,13 +27,16 @@
   },
   "homepage": "https://github.com/saif-rhouma/node-project-skeleton#readme",
   "dependencies": {
-    "chalk": "^5.1.0",
+    "chalk": "^4.1.2",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "helmet": "^6.0.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "swagger-cli": "^4.0.4",
+    "swagger-ui-express": "^4.5.0",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",
