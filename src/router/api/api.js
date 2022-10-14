@@ -7,7 +7,7 @@ module.exports = {
       method: 'get',
       path: '/',
       handler: (req, res) => {
-        res.send('Hello World!');
+        res.json({ items: [{ roleId: 1236, roleName: 'LeadDev' }] });
       },
     },
   ],

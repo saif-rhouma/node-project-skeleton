@@ -17,7 +17,7 @@ class App {
     this.app.use(
       cors({
         credentials: true,
-        origin: ['http://DOMAIN'],
+        origin: ['*'],
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH', 'OPTIONS'],
       })
     );
