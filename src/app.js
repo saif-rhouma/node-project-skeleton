@@ -18,7 +18,7 @@ class App {
       cors({
         credentials: true,
         origin: ['*'],
-        methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH', 'OPTIONS'],
+        methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH', 'OPTIONS'],
       })
     );
   }

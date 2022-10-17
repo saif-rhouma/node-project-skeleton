@@ -1,4 +1,5 @@
 import express from 'express';
+import runAsyncWrapper from '../utils/runAsyncWrapper';
 import apiRoutes from './api';
 class Router {
   constructor() {
@@ -7,12 +8,24 @@ class Router {
   }
   create(app) {
     // TODO : attach middleware
-    // TODO : attach routes
     this._attachApiRoutes();
-    // TODO : handle 404 pages
-    // TODO : handle exceptions
-    // TODO : register routes
+    this._handlePageNotFound();
+    this._handleExceptions();
     app.use(this.router);
+  }
+
+  _handlePageNotFound() {
+    this.router.all('*', async (req, res) => {
+      res.status(404).send('Page Not Found');
+    });
+  }
+
+  _handleExceptions() {
+    // eslint-disable-next-line no-unused-vars
+    this.router.use((err, req, res, next) => {
+      err.statusCode = err.status || err.statusCode || 500;
+      return res.status(err.statusCode).send(err.message);
+    });
   }
 
   _attachApiRoutes() {
@@ -22,7 +35,7 @@ class Router {
   _attachRoutes(routeGroups, prefix = '') {
     routeGroups.forEach(({ group, routes }) => {
       routes.forEach(({ method, path, handler }) => {
-        this.router[method](prefix + group.prefix + path, handler);
+        this.router[method](prefix + group.prefix + path, runAsyncWrapper(handler));
       });
     });
   }
